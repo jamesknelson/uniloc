@@ -1,0 +1,25 @@
+{
+  "name": "uniloc",
+  "version": "0.1.0",
+  "description": "Universal JavaScript Route Parsing and Generation in 1.3KB compressed/minified",
+  "main": "uniloc.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unicorn-standard/uniloc.git"
+  },
+  "keywords": [
+    "uniloc",
+    "routing",
+    "unicorn-standard",
+    "tiny"
+  ],
+  "author": "James K Nelson <james@jamesknelson.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unicorn-standard/uniloc/issues"
+  },
+  "homepage": "http://unicornstandard.com/packages/uniloc.html"
+}
