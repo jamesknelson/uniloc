@@ -45,8 +45,8 @@
       "Path `%s` does not end with the `/` character", path
     )
     assert(
-      path.indexOf('#' !== -1),
-      "Path `%s` does not contain the `#` character", path
+      path.indexOf('#') === -1 && path.indexOf('?') === -1,
+      "Path `%s` does not contain the `#` or `?` characters", path
     )
 
     return pathParts(path.slice(1)).concat(method)
@@ -135,7 +135,7 @@
 
 
     return {
-      lookupURI: function(uri, method) {
+      lookup: function(uri, method) {
         method = method ? method.toUpperCase() : 'GET'
 
         var i, x
@@ -170,7 +170,7 @@
       },
 
 
-      makeURI: function(name, options) {
+      generate: function(name, options) {
         options = options || {}
 
         var params = routesParams[name] || []

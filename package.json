@@ -1,6 +1,6 @@
 {
   "name": "uniloc",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Universal JavaScript Route Parsing and Generation in 1.3KB compressed/minified",
   "main": "uniloc.js",
   "scripts": {
