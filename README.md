@@ -26,7 +26,7 @@ var ROUTER = uniloc(
   { 
     listContacts: 'GET /contacts',
     postContact: 'POST /contacts',
-    editContact: 'GET /contacts/:id',
+    editContact: 'GET /contacts/:id/edit',
   }, 
 
   // Aliases
@@ -58,7 +58,7 @@ ROUTER.generate('listContacts', {page: 10})
 // '/contacts?page=10'
 
 ROUTER.generate('editContact', {id: 'james'})
-// '/contacts/james'
+// '/contacts/james/edit'
 ```
 
 ## Location strings
@@ -99,7 +99,7 @@ var ROUTER = uniloc(
   { 
     listContacts: 'GET /contacts',
     postContact: 'POST /contacts',
-    editContact: 'GET /contacts/:id',
+    editContact: 'GET /contacts/:id/edit',
   }, 
 
   // Aliases
@@ -147,7 +147,7 @@ ROUTER.generate('listContacts', {page: 10})
 // Returns '/contacts?page=10'
 
 ROUTER.generate('editContact', {id: 'james'})
-// Returns '/contacts/james'
+// Returns '/contacts/james/edit'
 
 ROUTER.generate('editFoo', {id: 'james'})
 // Exception!
