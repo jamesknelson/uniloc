@@ -11,7 +11,7 @@
   }
 
   function pathParts(path) {
-    return path == '' ? [] : path.toLowerCase().split('/')
+    return path == '' ? [] : path.split('/')
   }
 
   function routeParts(route) {
