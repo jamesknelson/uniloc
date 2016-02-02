@@ -1,3 +1,8 @@
+# uniloc-case-sensitive
+
+This is a fork of [uniloc](https://github.com/unicorn-standard/uniloc) to use case-sensitive URLs.
+
+
 # uniloc
 
 Uniloc is a utility to match URIs to named routes, and to generate URIs given a route name and options.

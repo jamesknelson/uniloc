@@ -1,22 +1,27 @@
 {
-  "name": "uniloc",
+  "name": "uniloc-case-sensitive",
   "version": "0.2.0",
-  "description": "Universal JavaScript Route Parsing and Generation in 1.3KB compressed/minified",
+  "description": "Forked version of Universal JavaScript Route Parsing and Generation in 1.3KB compressed/minified",
+  "author": "James K Nelson <james@jamesknelson.com>",
+  "contributors": [{
+    "name": "Harald Tobler",
+    "email": "harald.tobler@seriouscircus.com"
+  }],
   "main": "uniloc.js",
   "scripts": {
     "test": "npm run test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/unicorn-standard/uniloc.git"
+    "url": "git+https://github.com/seriouscircus/uniloc.git"
   },
   "keywords": [
     "uniloc",
     "routing",
     "unicorn-standard",
-    "tiny"
+    "tiny",
+    "case-sensitive"
   ],
-  "author": "James K Nelson <james@jamesknelson.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/unicorn-standard/uniloc/issues"
