@@ -71,7 +71,7 @@
     var currentTree = this.tree
 
     for (i = 0; i < branches.length; i++) {
-      branch = branches[i]  
+      branch = branches[i]
       if (!currentTree[branch]) {
         currentTree[branch] = {}
       }
@@ -149,12 +149,15 @@
 
         var parts = pathParts(split[0]).map(decodeURIComponent).concat(method)
         var name = lookupTree.find(parts)
+        if (!name) {
+          return null
+        }
         var options = {}
         var params, queryParts
 
         params = routesParams[name] || []
         queryParts = split[1] ? split[1].split('&') : []
-      
+
         for (i = 0; i != queryParts.length; i++) {
           x = queryParts[i].split('=')
           options[x[0]] = decodeURIComponent(x[1])
