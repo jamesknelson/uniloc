@@ -63,3 +63,39 @@ test('readme generate() example 3', (t) => {
     id: 'james'
   }), 'Unirouter Assertion Failed: No route with name `editFoo` exists')
 })
+
+test('lookup() should accept a trailing slash before query', (t) => {
+  const router = t.context.router
+
+  t.deepEqual(router.lookup('/contacts/13/edit/?details=true'), {
+    name: 'editContact',
+    options: {
+      id: '13',
+      details: 'true'
+    }
+  })
+})
+
+test('lookup() should remove consecutive slashes', (t) => {
+  const router = t.context.router
+
+  t.deepEqual(router.lookup('///contacts///13/edit///?details=true'), {
+    name: 'editContact',
+    options: {
+      id: '13',
+      details: 'true'
+    }
+  })
+})
+
+test('lookup() should strip fragment identifier', (t) => {
+  const router = t.context.router
+
+  t.deepEqual(router.lookup('/contacts/13/edit/?details=true#foo'), {
+    name: 'editContact',
+    options: {
+      id: '13',
+      details: 'true'
+    }
+  })
+})

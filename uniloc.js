@@ -138,13 +138,17 @@
         var i, x
 
         var split = uri
-          // Strip leading and trailing '/' (at end or before query string)
-          .replace(/^\/|\/($|\?)/g, '')
           // Strip fragment identifiers
           .replace(/#.*$/, '')
           .split('?', 2)
 
-        var parts = pathParts(split[0]).map(decodeURIComponent).concat(method)
+        var path = split[0]
+          // Replace consecutive slashes
+          .replace(/\/+/g, '/')
+          // Strip leading and trailing slashes
+          .replace(/^\/|\/$/g, '')
+
+        var parts = pathParts(path).map(decodeURIComponent).concat(method)
         var name = lookupTree.find(parts)
         if (!name) {
           return null
@@ -153,7 +157,9 @@
         var params, queryParts
 
         params = routesParams[name] || []
-        queryParts = split[1] ? split[1].split('&') : []
+
+        var query = split[1] || ''
+        queryParts = query ? query.split('&') : []
 
         for (i = 0; i !== queryParts.length; i++) {
           x = queryParts[i].split('=')
