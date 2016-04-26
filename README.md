@@ -23,11 +23,11 @@ npm install uniloc
 
 var ROUTER = uniloc(
   // Routes
-  { 
+  {
     listContacts: 'GET /contacts',
     postContact: 'POST /contacts',
     editContact: 'GET /contacts/:id/edit',
-  }, 
+  },
 
   // Aliases
   {
@@ -41,10 +41,10 @@ var ROUTER = uniloc(
  */
 
 ROUTER.lookup('/contacts/13/edit?details=true')
-// {name: 'editContact', options: {id: 13, details: true}}
+// {name: 'editContact', options: {id: '13', details: 'true'}}
 
 ROUTER.lookup('/?page=10')
-// {name: 'listContacts', options: {page: 10}}
+// {name: 'listContacts', options: {page: '10'}}
 
 ROUTER.lookup('/?page=10', 'PATCH')
 // null
@@ -96,11 +96,11 @@ While two routes or aliases cannot use the same location string, a route without
 ```javascript
 var ROUTER = uniloc(
   // Routes
-  { 
+  {
     listContacts: 'GET /contacts',
     postContact: 'POST /contacts',
     editContact: 'GET /contacts/:id/edit',
-  }, 
+  },
 
   // Aliases
   {
@@ -119,10 +119,10 @@ var ROUTER = uniloc(
 
 ```javascript
 ROUTER.lookup('/contacts/13/edit?details=true')
-// Returns {name: 'editContact', options: {id: 13, details: true}}
+// Returns {name: 'editContact', options: {id: '13', details: 'true'}}
 
 ROUTER.lookup('/?page=10')
-// Returns {name: 'listContacts', options: {page: 10}}
+// Returns {name: 'listContacts', options: {page: '10'}}
 
 ROUTER.lookup('/?page=10', 'PATCH')
 // Returns null
