@@ -4,7 +4,7 @@
   "description": "Universal JavaScript Route Parsing and Generation in 1.3KB compressed/minified",
   "main": "uniloc.js",
   "scripts": {
-    "lint": "standard uniloc.js",
+    "lint": "standard",
     "test": "npm run test"
   },
   "repository": {
@@ -23,7 +23,7 @@
     "url": "https://github.com/unicorn-standard/uniloc/issues"
   },
   "homepage": "http://unicornstandard.com/packages/uniloc.html",
-  "dependencies": {
-    "standard": "^6.0.8"
+  "devDependencies": {
+    "standard": "6.0.8"
   }
 }
