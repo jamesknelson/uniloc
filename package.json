@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clebert/uniloc"
+    "url": "git+https://github.com/clebert/uniloc.git"
   },
   "keywords": [
     "uniloc",
