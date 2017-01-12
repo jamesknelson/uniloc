@@ -1,0 +1,96 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@2.14.12
+3 info using node@v4.3.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/tianyunz/development/node/uniloc',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/tianyunz/.npm/uniloc-michr-fork/0.3.0/package.tgz not in flight; packing
+9 verbose makeDirectory /Users/tianyunz/.npm creation not in flight; initializing
+10 silly makeDirectory /Users/tianyunz/.npm uid: 502 gid: 20
+11 verbose tar pack [ '/Users/tianyunz/.npm/uniloc-michr-fork/0.3.0/package.tgz',
+11 verbose tar pack   '/Users/tianyunz/development/node/uniloc' ]
+12 verbose tarball /Users/tianyunz/.npm/uniloc-michr-fork/0.3.0/package.tgz
+13 verbose folder /Users/tianyunz/development/node/uniloc
+14 info prepublish uniloc-michr-fork@0.3.0
+15 verbose addLocalTarball adding from inside cache /Users/tianyunz/.npm/uniloc-michr-fork/0.3.0/package.tgz
+16 silly cache afterAdd uniloc-michr-fork@0.3.0
+17 verbose afterAdd /Users/tianyunz/.npm/uniloc-michr-fork/0.3.0/package/package.json not in flight; writing
+18 verbose afterAdd /Users/tianyunz/.npm/uniloc-michr-fork/0.3.0/package/package.json written
+19 silly publish { name: 'uniloc-michr-fork',
+19 silly publish   version: '0.3.0',
+19 silly publish   description: 'Universal JavaScript Route Parsing and Generation in 1.3KB compressed/minified',
+19 silly publish   main: 'uniloc.js',
+19 silly publish   scripts: { test: '' },
+19 silly publish   repository:
+19 silly publish    { type: 'git',
+19 silly publish      url: 'git+https://github.com/michr-cri/uniloc.git' },
+19 silly publish   keywords: [ 'uniloc', 'routing', 'unicorn-standard', 'tiny' ],
+19 silly publish   author: { name: 'James K Nelson', email: 'james@jamesknelson.com' },
+19 silly publish   license: 'MIT',
+19 silly publish   bugs: { url: 'https://github.com/unicorn-standard/uniloc/issues' },
+19 silly publish   homepage: 'http://unicornstandard.com/packages/uniloc.html',
+19 silly publish   readme: '# uniloc\n\nUniloc is a utility to match URIs to named routes, and to generate URIs given a route name and options.\n\nIn contrast to many popular routing systems, uniloc\'s behavior is not affected by the order in which routes are specified.\n\nAdditionally, by assuming that each location in your app has a single canonical URI/method, and assuming the format of your URIs follow a number of fairly uncontroversial conventions, uniloc is able to detect conflicts in your config which may would have resulted in hours of debugging pain in a first-match-wins system.\n\n## Installation\n\ninstall with npm:\n\n```\nnpm install uniloc-michr-fork\n```\n\n## Example\n\n```javascript\n/*\n * Configure routes and aliases\n */\n\nvar ROUTER = uniloc(\n  // Routes\n  { \n    listContacts: \'GET /contacts\',\n    postContact: \'POST /contacts\',\n    editContact: \'GET /contacts/:id/edit\',\n  }, \n\n  // Aliases\n  {\n    \'GET /\': \'listContacts\',\n  }\n);\n\n\n/*\n * Lookup URIs\n */\n\nROUTER.lookup(\'/contacts/13/edit?details=true\')\n// {name: \'editContact\', options: {id: 13, details: true}}\n\nROUTER.lookup(\'/?page=10\')\n// {name: \'listContacts\', options: {page: 10}}\n\nROUTER.lookup(\'/?page=10\', \'PATCH\')\n// null\n\n\n/*\n * Generate URIs\n */\n\nROUTER.generate(\'listContacts\', {page: 10})\n// \'/contacts?page=10\'\n\nROUTER.generate(\'editContact\', {id: \'james\'})\n// \'/contacts/james/edit\'\n```\n\n## Location strings\n\nUniloc assumes that each of the locations in your app is associated with a single HTTP method, and a single URI or set of URIs where the only varying parts represent the **route parameters**.\n\nGiven this assumption, it is possible to represent each location in the application with a **location string**, which includes the HTTP method, and a URI where the varying parts are marked as parameters. For example:\n\n```\nPATCH /contacts/:contactId/photos/:photoId\n```\n\n### Format\n\n- Location strings must consist of a HTTP method and URI template joined by whitespace\n- The HTTP method must be in UPPERCASE\n- The URI template must start with a `/`, end without a `/`, and must not include the `?` or `#` characters\n- Route parameters are delineated with `/` character or the end of the string, and start with a `:` character followed by the route parameter\'s name.\n\n## API\n\n### `uniloc(routes, aliases={}) -> {lookup, generate}`\n\n`uniloc` takes two objects:\n\n- `routes`: an object mapping route names to their canonical location string\n- `aliases`: *optional* an object mapping other location strings to the routes named in `routes`\n\nRoute names are just strings. The `.` character is reserved, as it may be used in a future release to specify hierarchy.\n\nWhile two routes or aliases cannot use the same location string, a route without a route parameter in one position *can* overlap another URI with a route parameter in the same position. In this case, the route without the route parameter will be given priority.\n\n#### Example\n\n```javascript\nvar ROUTER = uniloc(\n  // Routes\n  { \n    listContacts: \'GET /contacts\',\n    postContact: \'POST /contacts\',\n    editContact: \'GET /contacts/:id/edit\',\n  }, \n\n  // Aliases\n  {\n    \'GET /\': \'listContacts\',\n  }\n);\n```\n\n### `lookup(URI, method=\'GET\') -> {name, options}`\n\n`lookup` is one of the properties of the object returned by `uniloc`.\n\n`lookup` takes a URI and HTTP method, and returns the route name which matches that URI/method, with an options object containing any route and query parameters. If no location is defined which matches the passed in URI/method, it returns null.\n\n#### Examples\n\n```javascript\nROUTER.lookup(\'/contacts/13/edit?details=true\')\n// Returns {name: \'editContact\', options: {id: 13, details: true}}\n\nROUTER.lookup(\'/?page=10\')\n// Returns {name: \'listContacts\', options: {page: 10}}\n\nROUTER.lookup(\'/?page=10\', \'PATCH\')\n// Returns null\n\n```\n\n### `generate(name, options) -> URI`\n\n`generate` is one of the properties of the object returned by `uniloc`.\n\n`generate` takes a route name and options object, and returns a URI string\nbased on the canonical URI for the given route. Options are substituted in\nfor route parameters where possible, and the remaining options are appended\nas a query string.\n\nIf the given route name doesn\'t exist, an exception is thrown.\n\n#### Examples\n\n```javascript\nROUTER.generate(\'listContacts\', {page: 10})\n// Returns \'/contacts?page=10\'\n\nROUTER.generate(\'editContact\', {id: \'james\'})\n// Returns \'/contacts/james/edit\'\n\nROUTER.generate(\'editFoo\', {id: \'james\'})\n// Exception!\n```\n',
+19 silly publish   readmeFilename: 'README.md',
+19 silly publish   gitHead: '0bb5cebbca3363e27d60de4d7bfbcfe04da73823',
+19 silly publish   _id: 'uniloc-michr-fork@0.3.0',
+19 silly publish   _shasum: '90142457dd2a5d4eeebb5d341491a518c97e6d6d',
+19 silly publish   _from: '.' }
+20 verbose getPublishConfig undefined
+21 silly mapToRegistry name uniloc-michr-fork
+22 silly mapToRegistry using default registry
+23 silly mapToRegistry registry https://registry.npmjs.org/
+24 silly mapToRegistry uri https://registry.npmjs.org/uniloc-michr-fork
+25 verbose publish registryBase https://registry.npmjs.org/
+26 silly publish uploading /Users/tianyunz/.npm/uniloc-michr-fork/0.3.0/package.tgz
+27 verbose request uri https://registry.npmjs.org/uniloc-michr-fork
+28 verbose request sending authorization for write operation
+29 info attempt registry request try #1 at 3:19:35 PM
+30 verbose request using bearer token for auth
+31 verbose request id b6ea3f7b2b242df9
+32 http request PUT https://registry.npmjs.org/uniloc-michr-fork
+33 http 403 https://registry.npmjs.org/uniloc-michr-fork
+34 verbose headers { 'content-type': 'application/json',
+34 verbose headers   'cache-control': 'max-age=300',
+34 verbose headers   'content-length': '128',
+34 verbose headers   'accept-ranges': 'bytes',
+34 verbose headers   date: 'Thu, 12 Jan 2017 20:19:35 GMT',
+34 verbose headers   via: '1.1 varnish',
+34 verbose headers   connection: 'keep-alive',
+34 verbose headers   'x-served-by': 'cache-ord1747-ORD',
+34 verbose headers   'x-cache': 'MISS',
+34 verbose headers   'x-cache-hits': '0',
+34 verbose headers   'x-timer': 'S1484252375.278328,VS0,VE590',
+34 verbose headers   vary: 'Accept-Encoding' }
+35 verbose request invalidating /Users/tianyunz/.npm/registry.npmjs.org/uniloc-michr-fork on PUT
+36 error publish Failed PUT 403
+37 verbose stack Error: "You cannot publish over the previously published version 0.3.0. Try bumping the version to 1.0.0" : uniloc-michr-fork
+37 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+37 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+37 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+37 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+37 verbose stack     at emitTwo (events.js:87:13)
+37 verbose stack     at Request.emit (events.js:172:7)
+37 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1082:10)
+37 verbose stack     at emitOne (events.js:82:20)
+37 verbose stack     at Request.emit (events.js:169:7)
+37 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+38 verbose statusCode 403
+39 verbose pkgid uniloc-michr-fork
+40 verbose cwd /Users/tianyunz/development/node/uniloc
+41 error Darwin 15.6.0
+42 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "publish"
+43 error node v4.3.0
+44 error npm  v2.14.12
+45 error code E403
+46 error "You cannot publish over the previously published version 0.3.0. Try bumping the version to 1.0.0" : uniloc-michr-fork
+47 error If you need help, you may report this error at:
+47 error     <https://github.com/npm/npm/issues>
+48 verbose exit [ 1, true ]
