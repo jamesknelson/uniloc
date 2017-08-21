@@ -9,10 +9,10 @@ var ROUTER = uniloc(
     }
 );
 
-var results = ROUTER.lookup('/applications/1/lookup-values');
+var results = ROUTER.lookup('/applications/1');
 
 console.log(results);
 
-results = ROUTER.lookup('/applications');
+results = ROUTER.lookup('/applications/1/lookup-values');
 
 console.log(results);
