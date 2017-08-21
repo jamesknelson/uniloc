@@ -98,6 +98,15 @@
         }
     }
 
+    function isEmpty(obj) {
+        for(var prop in obj) {
+            if(obj.hasOwnProperty(prop))
+                return false;
+        }
+
+        return JSON.stringify(obj) === JSON.stringify({});
+    }
+
     function createRouter(routes, aliases) {
         var parts, name, route;
         var routesParams = {};
@@ -110,7 +119,6 @@
         for (name in routes) {
             if (routes.hasOwnProperty(name)) {
                 route = routes[name]
-
                 assert(
                     typeof route == 'string',
                     "Route '%s' must be a string", name
@@ -163,9 +171,20 @@
                     .split('?', 2)
 
                 var parts = pathParts(split[0]).map(decodeURIComponent).concat(method)
-                var name = lookupTree.find(parts)
-                if (!name) {
-                    return null
+
+                var name = undefined;
+                while(!isEmpty(lookupTree)) {
+                    var name = lookupTree.find(parts);
+
+                    if (!name) {
+                        delete lookupTree.tree[parts[0]];
+                    } else {
+                        break;
+                    }
+                }
+
+                if(!name) {
+                    return null;
                 }
                 var options = {}
                 var params, queryParts
