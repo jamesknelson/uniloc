@@ -280,7 +280,13 @@
                                 "Non-route parameters must use only the following characters: A-Z, a-z, 0-9, -, _"
                             )
 
-                            query.push(key + '=' + encodeURIComponent(options[key]))
+                            if (options[key].constructor === Array) {
+															  let array = options[key];
+                                for(let i = 0; i < array.length; i++)
+                                    query.push(key + '=' + encodeURIComponent(array[i]));
+                            } else {
+															  query.push(key + '=' + encodeURIComponent(options[key]))
+														}
                         }
                         else {
                             inject.push(key)
