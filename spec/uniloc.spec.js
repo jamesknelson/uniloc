@@ -67,15 +67,10 @@ describe('uniloc', () => {
 		expect(router.generate('anAppRoute', {id: '1'})).toEqual('/apps/1');
 	});
 
-	/*
-		it('returns undefined name on unrecognized routes', () => {
-			const router = uniloc({
-				getResource: 'GET /app',
-			});
-			expect(router.lookup('/abc')).toEqual({
-				name: undefined,
-				options: {},
-			});
+	it('returns undefined name on unrecognized routes', () => {
+		const router = uniloc({
+			getResource: 'GET /app',
 		});
-		*/
+		expect(router.lookup('/abc')).toBe(null);
+	});
 });

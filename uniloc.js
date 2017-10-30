@@ -208,15 +208,7 @@
 
                 var name = undefined;
                 var lookupTreeCopy = clone(lookupTree);
-                while(!isEmpty(lookupTreeCopy)) {
-                    var name = lookupTreeCopy.find(parts);
-
-                    if (!name) {
-                        delete lookupTreeCopy.tree[parts[0]];
-                    } else {
-                        break;
-                    }
-                }
+                var name = lookupTreeCopy.find(parts);
 
                 if(!name) {
                     return null;
