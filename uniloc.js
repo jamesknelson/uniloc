@@ -160,7 +160,16 @@
 
         for (i = 0; i != queryParts.length; i++) {
           x = queryParts[i].split('=')
-          options[x[0]] = decodeURIComponent(x[1])
+          var key = x[0]
+          var value = decodeURIComponent(x[1])
+          if(options.hasOwnProperty(key)) {
+            if (!Array.isArray(options[key])) {
+              options[key] = [options[key]]
+            }
+            options[key].push(value)
+          } else {
+            options[key] = value
+          }
         }
 
         // Named parameters overwrite query parameters
@@ -181,7 +190,7 @@
         var route = routes[name]
         var query = []
         var inject = []
-        var key
+        var key, i
 
         assert(route, "No route with name `%s` exists", name)
 
@@ -195,7 +204,13 @@
                 "Non-route parameters must use only the following characters: A-Z, a-z, 0-9, -, _"
               )
 
-              query.push(key+'='+encodeURIComponent(options[key]))
+              var value = options[key]
+              if (!Array.isArray(value)) {
+                value = [value]
+              }
+              for (i = 0; i < value.length; i++) {
+                query.push(key+'='+encodeURIComponent(value[i]))
+              }
             }
             else {
               inject.push(key)

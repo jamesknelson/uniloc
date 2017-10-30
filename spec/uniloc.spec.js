@@ -73,4 +73,22 @@ describe('uniloc', () => {
 		});
 		expect(router.lookup('/abc')).toBe(null);
 	});
+
+	it('works in a complex case', () => {
+		const router = uniloc({
+			"getResource": "GET /:$resourceName",
+			"getResourceById": "GET /:$resourceName/:$resourceId",
+			"postResource": "POST /:$resourceName",
+			'long': 'GET /a/b/c/:id/d',
+			"short": "GET /a/b/:$resourceName",
+			"other": "GET /z/:$resourceName"
+		});
+
+		expectIsomorphic(router, '/a/b/c/1/d', {
+			name: 'long',
+			options: {
+				id: '1'
+			}
+		});
+	});
 });
