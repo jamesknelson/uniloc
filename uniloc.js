@@ -158,8 +158,11 @@
 
         params = routesParams[name] || []
 
+        var removeEmptyParams = function (p) {
+          return p && (typeof(p) === 'string' || p instanceof String) && p.length > 0
+        }
         var query = split[1] || ''
-        queryParts = query ? query.split('&') : []
+        queryParts = query ? query.split('&').filter(removeEmptyParams) : []
 
         for (i = 0; i !== queryParts.length; i++) {
           x = queryParts[i].split('=')

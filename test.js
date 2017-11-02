@@ -99,3 +99,40 @@ test('lookup() should strip fragment identifier', (t) => {
     }
   })
 })
+
+test('lookup() should accept a leading ampersand in query string', (t) => {
+  const router = t.context.router
+
+  t.deepEqual(router.lookup('/contacts/13/edit/?&details=true#foo'), {
+    name: 'editContact',
+    options: {
+      id: '13',
+      details: 'true'
+    }
+  })
+})
+
+test('lookup() should accept a trailing ampersand in query string', (t) => {
+  const router = t.context.router
+
+  t.deepEqual(router.lookup('/contacts/13/edit/?details=true&'), {
+    name: 'editContact',
+    options: {
+      id: '13',
+      details: 'true'
+    }
+  })
+})
+
+test('lookup() should accept double ampersands in query string', (t) => {
+  const router = t.context.router
+
+  t.deepEqual(router.lookup('/contacts/13/edit/?details=true&&foo=bar'), {
+    name: 'editContact',
+    options: {
+      id: '13',
+      details: 'true',
+      foo: 'bar'
+    }
+  })
+})

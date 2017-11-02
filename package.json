@@ -1,6 +1,6 @@
 {
   "name": "uniloc-clebert-fork",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Universal JavaScript Route Parsing and Generation in 1.3KB compressed/minified",
   "main": "uniloc.js",
   "scripts": {
