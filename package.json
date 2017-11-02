@@ -1,14 +1,15 @@
 {
-  "name": "uniloc",
-  "version": "0.3.0",
+  "name": "uniloc-clebert-fork",
+  "version": "0.3.2",
   "description": "Universal JavaScript Route Parsing and Generation in 1.3KB compressed/minified",
   "main": "uniloc.js",
   "scripts": {
-    "test": "npm run test"
+    "lint": "standard",
+    "test": "ava"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/unicorn-standard/uniloc.git"
+    "url": "git+https://github.com/clebert/uniloc.git"
   },
   "keywords": [
     "uniloc",
@@ -21,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/unicorn-standard/uniloc/issues"
   },
-  "homepage": "http://unicornstandard.com/packages/uniloc.html"
+  "homepage": "http://unicornstandard.com/packages/uniloc.html",
+  "devDependencies": {
+    "ava": "0.15.1",
+    "standard": "7.1.1"
+  }
 }
