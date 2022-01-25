@@ -8,10 +8,10 @@ Additionally, by assuming that each location in your app has a single canonical 
 
 ## Installation
 
-Use as a [standalone file](https://raw.githubusercontent.com/unicorn-standard/uniloc/master/uniloc.js), or install with npm:
+install with npm:
 
 ```
-npm install uniloc
+npm install uniloc-michr-fork
 ```
 
 ## Example
